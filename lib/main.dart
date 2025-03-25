@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:vehiclerecord/HomeScreen.dart';
+import 'package:vehiclerecord/LoginScreen.dart';
+import 'package:vehiclerecord/NoInternetPage.dart';
 import 'SplashScreen.dart';
 
 void main() {
@@ -13,7 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
+      home: LoginScreen(),
     );
   }
 }

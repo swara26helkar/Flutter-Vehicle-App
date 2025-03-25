@@ -15,6 +15,7 @@ class PaymentScreen extends StatefulWidget {
 class _PaymentScreenState extends State<PaymentScreen> {
   List<Map<String, dynamic>> cashPayments = [];
   List<Map<String, dynamic>> onlinePayments = [];
+  List<Map<String, dynamic>> bothPayments = [];
 
   @override
   void initState() {
@@ -45,6 +46,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
             loadedEntries.where((entry) => entry["paymentMode"] == "Cash").toList();
         onlinePayments =
             loadedEntries.where((entry) => entry["paymentMode"] == "Online").toList();
+        onlinePayments =
+            loadedEntries.where((entry) => entry["paymentMode"] == "Both").toList();
       });
     }
   }
@@ -53,17 +56,18 @@ class _PaymentScreenState extends State<PaymentScreen> {
   Widget build(BuildContext context) {
 
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
         appBar: AppBar(
-            title: Text("Payment Page",style: TextStyle(fontSize: 18,color:Colors.black),),
+            title: Text("Payment Page",style: TextStyle(fontSize: 18,color:Colors.black,fontWeight: FontWeight.bold),),
             backgroundColor: Colors.blue,
           iconTheme: IconThemeData(color: Colors.black),
           bottom: TabBar(
-            labelStyle: TextStyle(fontSize: 15, color: Colors.white),
+            labelStyle: TextStyle(fontSize: 12, color: Colors.white,fontWeight: FontWeight.bold),
             tabs: [
               Tab(text: "Cash Payments"),
               Tab(text: "Online Payments"),
+              Tab(text: "Both Payments"),
             ],
           ),
         ),
@@ -71,6 +75,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
           children: [
             PaymentList(payments: cashPayments),
             PaymentList(payments: onlinePayments),
+            PaymentList(payments: bothPayments),
           ],
         ),
       ),
@@ -111,9 +116,14 @@ class PaymentList extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text("Fera: ${payments[index]["fera"]}"),
+                Text("Body Level: ${payments[index]["bodylevel"]}"),
                 Text("Total: ₹${payments[index]["totalAmount"]}",
                     style: TextStyle(fontWeight: FontWeight.bold)),
                 Text("Paid: ₹${payments[index]["paidAmount"]}",
+                    style: TextStyle(color: Colors.green)),
+                Text("Cash Paid: ₹${payments[index]["cashAmount"]}",
+                    style: TextStyle(color: Colors.green)),
+                Text("Online Paid: ₹${payments[index]["onlineAmount"]}",
                     style: TextStyle(color: Colors.green)),
                 Text("Pending: ₹${payments[index]["pendingAmount"]}",
                     style: TextStyle(color: Colors.red)),
